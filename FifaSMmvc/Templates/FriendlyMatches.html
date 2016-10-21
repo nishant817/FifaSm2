@@ -1,0 +1,106 @@
+﻿<!--<div ng-controller="fsmController">
+
+  <div id="addScoreModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+          <h2 class="modal-title" id="addScoreModalLabel"> Add Score </h2>
+        </div>
+        <div class="modal-body" ng-init="fMatchDetail = []">
+          <div class="container noPad">
+            <table class="col-xs-12 col-md-4">
+              <tr ng-repeat="i in [0,1]" style="border:2px solid Highlight;">
+                <td style="padding-bottom:6px;padding-top:6px;">
+                  <table>
+                    <tr>
+                      <td width="Auto">
+                        <larger>Score {{i+1}}</larger>
+                      </td>
+                      <td colspan="2" style="text-align:right;">
+                        <input ng-model="fMatchDetail[i].MatchDt" type="date" ng-init="fMatchDetail[i].MatchDt = today" value="{{fMatchDetail[i].MatchDt}}" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Players <span style="color:red"> *</span>: </td>
+                      <td>
+                        <select ng-model="fMatchDetail[i].Player1" ng-options="p.Id as p.Name for p in players" class="players"></select>
+                      </td>
+                      <td>
+                        <select ng-model="fMatchDetail[i].Player2" ng-options="p.Id as p.Name for p in players" class="players"></select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Team:  </td>
+                      <td>
+                        <input type="text" class="teamName" ng-model="fMatchDetail[i].Team1" maxlength="18" placeholder="Team Name" />
+                      </td>
+                      <td>
+                        <input type="text" class="teamName" ng-model="fMatchDetail[i].Team2" maxlength="18" placeholder="Team Name" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Goals<span style="color:red"> *</span>:  </td>
+                      <td>
+                        <input ng-model="fMatchDetail[i].Goals1" class="goal" type="number" placeholder="0" required />
+                      </td>
+                      <td>
+                        <input ng-model="fMatchDetail[i].Goals2" class="goal" type="number" placeholder="0" required />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>              
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button ng-click="AddNewScores()" type="submit" class="btn btn-info btn-sm" style="font-size: 11px;">Submit</button>
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="font-size: 11px;">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-5">
+        <strong>Filter: </strong><select ng-options="p as p.Name for p in playersWithAll" ng-model="filterByPlayer" ng-change="setPlayerFilter()"></select>
+
+        <button type="button" data-toggle="modal" ng-click="fMatchDetail = []" data-target="#addScoreModal"
+                class="btn btn-warning pull-right">Add Score</button>
+      </div>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="container">
+
+    <table class="table table-striped" border="1" style="width:auto;">
+      <thead>
+        <tr>
+          <th>Sl#</th>
+          <th>Date</th>
+          <th>Player 1</th>
+          <th>Score</th>
+          <th>Player 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="score in fScores">
+          <td>{{score.Id}}</td>
+          <td>{{score.mdt | date: 'yyyy-MM-dd'}}</td>
+          <td class="{{score.s1}}">{{score.n1}} <span ng-show="score.Team1.length > 0">({{score.Team1}})</span></td>
+          <td>{{score.Goals1}} - {{score.Goals2}}</td>
+          <td class="{{score.s2}}">{{score.n2}} <span ng-show="score.Team2.length > 0">({{score.Team2}})</span></td>          
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>-->

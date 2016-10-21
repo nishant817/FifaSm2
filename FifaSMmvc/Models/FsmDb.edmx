@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FsmDB001Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FmScores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Player1" Type="int" Nullable="false" />
+          <Property Name="Goals1" Type="int" Nullable="false" />
+          <Property Name="Player2" Type="int" Nullable="false" />
+          <Property Name="Goals2" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FmScores_Players1">
+          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="FmScores" Type="Self.FmScores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FmScores">
+              <PropertyRef Name="Player1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FmScores_Players2">
+          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="FmScores" Type="Self.FmScores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FmScores">
+              <PropertyRef Name="Player2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FsmDB001ModelStoreContainer">
+          <EntitySet Name="FmScores" EntityType="Self.FmScores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Players" EntityType="Self.Players" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FmScores_Players1" Association="Self.FK_FmScores_Players1">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="FmScores" EntitySet="FmScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FmScores_Players2" Association="Self.FK_FmScores_Players2">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="FmScores" EntitySet="FmScores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FsmDB001Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FmScore">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Player1" Type="Int32" Nullable="false" />
+          <Property Name="Goals1" Type="Int32" Nullable="false" />
+          <Property Name="Player2" Type="Int32" Nullable="false" />
+          <Property Name="Goals2" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_FmScores_Players1" FromRole="FmScores" ToRole="Players" />
+          <NavigationProperty Name="Player3" Relationship="Self.FK_FmScores_Players2" FromRole="FmScores" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FmScores" Relationship="Self.FK_FmScores_Players1" FromRole="Players" ToRole="FmScores" />
+          <NavigationProperty Name="FmScores1" Relationship="Self.FK_FmScores_Players2" FromRole="Players" ToRole="FmScores" />
+        </EntityType>
+        <Association Name="FK_FmScores_Players1">
+          <End Role="Players" Type="Self.Player" Multiplicity="1" />
+          <End Role="FmScores" Type="Self.FmScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FmScores">
+              <PropertyRef Name="Player1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FmScores_Players2">
+          <End Role="Players" Type="Self.Player" Multiplicity="1" />
+          <End Role="FmScores" Type="Self.FmScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FmScores">
+              <PropertyRef Name="Player2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FsmDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FmScores" EntityType="Self.FmScore" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <AssociationSet Name="FK_FmScores_Players1" Association="Self.FK_FmScores_Players1">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="FmScores" EntitySet="FmScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FmScores_Players2" Association="Self.FK_FmScores_Players2">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="FmScores" EntitySet="FmScores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FsmDB001ModelStoreContainer" CdmEntityContainer="FsmDBEntities">
+          <EntitySetMapping Name="FmScores">
+            <EntityTypeMapping TypeName="FsmDB001Model.FmScore">
+              <MappingFragment StoreEntitySet="FmScores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Player1" ColumnName="Player1" />
+                <ScalarProperty Name="Goals1" ColumnName="Goals1" />
+                <ScalarProperty Name="Player2" ColumnName="Player2" />
+                <ScalarProperty Name="Goals2" ColumnName="Goals2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="FsmDB001Model.Player">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

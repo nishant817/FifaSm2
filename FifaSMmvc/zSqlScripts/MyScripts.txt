@@ -1,0 +1,120 @@
+﻿update FmScores set Team1 = '', Team2='';
+ALTER TABLE [dbo].[FmScores] ALTER COLUMN [Team1] INT NOT NULL;
+ALTER TABLE [dbo].[FmScores] ALTER COLUMN [Team2] INT NOT NULL;
+
+drop table [dbo].[Players];
+CREATE TABLE [dbo].[Players]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [Name] NVARCHAR(50) NOT NULL
+);
+
+insert into Players values (1, 'Amit'), (2, 'Debashis'), (3, 'Jitesh'), (4, 'Nishant'), (5, 'Puru'), (6, 'Rajneesh'), (7, 'Sujeet');;
+select * from players;
+
+drop TABLE [dbo].[FmScores];
+CREATE TABLE [dbo].[FmScores]
+(
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
+    [MatchDt] DATE NULL, 
+    [Player1] INT NOT NULL, 
+	[Team1] VARCHAR(20) NULL,
+    [Goals1] INT NOT NULL, 
+    [Player2] INT NOT NULL, 
+	[Team2] VARCHAR(20) NULL, 
+    [Goals2] INT NOT NULL, 
+    CONSTRAINT [FK_FmScores_Players1] FOREIGN KEY ([Player1]) REFERENCES [Players]([Id]), 
+    CONSTRAINT [FK_FmScores_Players2] FOREIGN KEY ([Player2]) REFERENCES [Players]([Id])
+);
+
+Insert into FmScores (MatchDt, Player1, Goals1, Player2, Goals2) values (9/26/2016 9:20:34 PM, 0, 2, 4, 4);
+select * from fmscores;
+
+workstation id=FsmDB001.mssql.somee.com;packet size=4096;user id=fifastlboyz_SQLLogin_1;pwd=giuuh7oi3q;data source=FsmDB001.mssql.somee.com;persist security info=False;initial catalog=FsmDB001
+
+<add name="FsmDBEntities" connectionString=
+"metadata=res://*/Models.FsmDb.csdl|res://*/Models.FsmDb.ssdl|res://*/Models.FsmDb.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\FsmDB001.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+workstation id=FsmDB001.mssql.somee.com;packet size=4096;user id=fifastlboyz_SQLLogin_1;pwd=giuuh7oi3q;data source=FsmDB001.mssql.somee.com;persist security info=False;initial catalog=FsmDB001
+
+==========================
+
+Tournament:
+drop table Tournaments;
+CREATE TABLE [dbo].[Tournaments] (
+    [Id]          INT            NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    [Name]        NVARCHAR (25)  NOT NULL,
+    [Date]        DATE           NULL,
+    [R1Id]        INT            NULL,
+    [R2Id]        INT            NULL,
+    [R3Id]        INT            NULL,
+    [R4Id]        INT            NULL,
+    [R5Id]        INT            NULL,
+    [R6Id]        INT            NULL,
+    [R7Id]        INT            NULL,
+    [Details]     NVARCHAR (150) NULL,
+	[HasResult]   INT,
+);
+drop table TournamentMatches;
+CREATE TABLE [dbo].[TournamentMatches] (
+    [Id]          INT            NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[TId]         INT            NOT NULL,
+    [MType]       NVARCHAR (20)   NOT NULL,
+    [Details]     NVARCHAR (150) NULL,
+    [P1]          INT            NOT NULL,
+	[T1]		  VARCHAR(20)    NULL,
+    [G1]          INT            NOT NULL,
+    [P2]          INT            NOT NULL,
+	[T2]          VARCHAR(20)    NULL,
+    [G2]          INT            NOT NULL,
+);
+==========================
+
+
+
+Misc:
+D:\Cloudy\OneDrive\KM\Trials\FifaSMmvc\App_Data\
+FsmDB001
+
+
+
+//var players = 
+//[
+//  {id: "0", name:"Amit", rank:""},
+//  {id: "1", name:"Debashis", rank:""},
+//  {id: "2", name:"Jitesh", rank:""},
+//  {id: "3", name:"Nishant", rank:""},
+//  {id: "4", name:"Puru", rank:""},
+//  {id: "5", name:"Sujeet", rank:""},
+//];
+
+//var fScores =
+//[
+//  {id: "1", dt: "", p1:"1", p2: "3", g1: "1", g2: "1"},
+//  {id: "2", dt: "", p1:"2", p2: "4", g1: "2", g2: "3"},
+//  {id: "3", dt: "", p1:"3", p2: "5", g1: "3", g2: "4"},
+//  {id: "4", dt: "", p1:"4", p2: "0", g1: "4", g2: "1"},
+//  {id: "5", dt: "", p1:"5", p2: "2", g1: "2", g2: "5"},
+//  {id: "6", dt: "", p1:"0", p2: "3", g1: "3", g2: "7"},
+//  {id: "7", dt: "", p1:"1", p2: "4", g1: "5", g2: "0"},
+//  {id: "8", dt: "", p1:"2", p2: "5", g1: "1", g2: "0"},
+//  {id: "9", dt: "", p1:"3", p2: "0", g1: "2", g2: "3"},
+//  {id: "10", dt: "", p1:"4", p2: "1", g1: "0", g2: "5"},
+//  {id: "11", dt: "", p1:"5", p2: "2", g1: "2", g2: "7"},
+//  {id: "12", dt: "", p1:"0", p2: "3", g1: "5", g2: "8"},
+//  {id: "13", dt: "", p1:"1", p2: "4", g1: "2", g2: "2"},
+//  {id: "14", dt: "", p1:"2", p2: "5", g1: "2", g2: "1"},
+//  {id: "15", dt: "", p1:"3", p2: "0", g1: "6", g2: "3"},
+//  {id: "16", dt: "", p1:"4", p2: "5", g1: "3", g2: "2"},
+//  {id: "17", dt: "", p1:"5", p2: "4", g1: "1", g2: "4"},
+//  {id: "18", dt: "", p1:"0", p2: "3", g1: "2", g2: "0"},
+//  {id: "19", dt: "", p1:"1", p2: "2", g1: "3", g2: "6"},
+//  {id: "20", dt: "", p1:"2", p2: "1", g1: "0", g2: "3"},
+//];
+
+//var metaData =
+//[
+//  fScoresUpdDt: "",
+//  fReportUpdDt: "",
+//  tScoresUpdDt: "",
+//  tReportUpdDt: "",
+//];

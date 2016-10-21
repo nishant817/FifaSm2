@@ -1,0 +1,286 @@
+﻿<div class="container" ng-controller="TournamentController">
+  <div id="addTournamentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+          <h2 class="modal-title" id="addTournamentModalLabel"> Add Tournament </h2>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+              Name:
+              <input ng-model="tournamentToAdd.Name" required />
+              <br />
+              Date:
+              <input ng-model="tournamentToAdd.Date" type="date" />
+              <br />
+              Details:
+              <textarea ng-model="tournamentToAdd.Details"></textarea>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+          <button ng-click="AddNewTournament()" type="submit" class="btn btn-info btn-sm" style="font-size: 11px;">Submit</button>
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="font-size: 11px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addMatchModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+          <div class="modal-title">
+            <h3> Add Tournament Match Score</h3>
+            <h4># {{selectedTournament.Id}}:  {{selectedTournament.Name}}</h4>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="container noPad">
+            <div class="col-xs-12 col-md-3 noPad">
+              <table>
+                <tr>
+                  <td>Type:  </td>
+                  <td colspan="2">
+                    <select ng-options="mType for mType in matchTypes" ng-model="matchToAdd.MType"></select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Players:  </td>
+                  <td>
+                    <select ng-model="matchToAdd.P1" ng-options="p.Id as p.Name for p in players" class="players"></select>
+                  </td>
+                  <td>
+                    <select ng-model="matchToAdd.P2" ng-options="p.Id as p.Name for p in players" class="players"></select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Team:  </td>
+                  <td>
+                    <input type="text" ng-model="matchToAdd.T1" placeholder="Team Name" class="teamName" maxlength="18" />
+                  </td>
+                  <td>
+                    <input type="text" ng-model="matchToAdd.T2" placeholder="Team Name" class="teamName" maxlength="18" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Goals:  </td>
+                  <td>
+                    <input type="number" ng-model="matchToAdd.G1" class="goal" />
+                  </td>
+                  <td>
+                    <input type="number" ng-model="matchToAdd.G2" class="goal" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Details:  </td>
+                  <td colspan="2">                    
+                    <textarea ng-model="matchToAdd.Details" placeholder="Details/Highlights/Anything you like to add" style="width:100%"></textarea>
+                  </td>
+                </tr>
+              </table>
+            </div>          
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button ng-click="AddTournamentMatch()" type="submit" class="btn btn-info btn-sm" style="font-size: 11px;">Submit</button>
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="font-size: 11px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addResultModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+          <div class="modal-title">
+            <h3> Add Tournament Results</h3>
+            <h4># {{selectedTournament.Id}}:  {{selectedTournament.Name}}</h4>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="container noPad">
+            <div class="col-xs-12 col-md-3 noPad">
+              <table>
+                <tr style="background-color:gold;border:1px solid lightBlue;height:50px;">
+                  <td style="text-align:right;" width="130px">Winner:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R1Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:gold;"></select>
+                  </td>
+                </tr>
+                <tr style="background-color:silver;border:1px solid lightBlue;height:40px;">
+                  <td style="text-align:right;">Runner:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R2Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:silver;"></select>
+                  </td>
+                </tr>
+                <tr style="background-color:sandybrown;border:1px solid lightBlue;height:30px;">
+                  <td style="text-align:right;">3rd Position:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R3Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:sandybrown;"></select>
+                  </td>
+                </tr>
+                <tr style="background-color:beige;">
+                  <td style="text-align:right;">4th Position:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R4Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:beige;"></select>
+                  </td>
+                </tr>
+                <tr style="background-color:beige;">
+                  <td style="text-align:right;">5th Position:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R5Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:beige;"></select>
+                  </td>
+                </tr>
+                <tr style="background-color:beige;">
+                  <td style="text-align:right;">6th Position:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R6Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:beige;"></select>
+                  </td>
+                </tr>
+                <tr style="background-color:beige;">
+                  <td style="text-align:right;">7th Position:  </td>
+                  <td>
+                    <select ng-model="selectedTournament.R7Id" ng-options="p.Id as p.Name for p in players" class="players" style="background-color:beige;"></select>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    Details:
+                    <textarea ng-model="selectedTournament.Details" placeholder="Comments/Details/Highlights/Anything you like to add" style="width:100%"></textarea>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button ng-click="AddTournamentResult()" type="submit" class="btn btn-info btn-sm" style="font-size: 11px;">Submit</button>
+          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="font-size: 11px;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div style="float:left;">
+        <bold>Select: </bold>
+        <select ng-model="selectedTournament" ng-options="t as t.Name for t in tournaments" ng-change="TournamentSelectionChanged()"
+                style="width:120px"></select>
+      </div>
+
+      <div style="float:left;">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" data-toggle="modal" data-target="#addTournamentModal" class="btn btn-warning pull-right">
+          +
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-12">      
+      <p>{{selectedTournament.Details}}</p>
+    </div>
+  </div>
+
+  <div><br /></div>
+
+  <div class="row col-xs-12" ng-show="selectedTournament.HasResult">
+    <h2>Result</h2>
+    <table>
+      <tr style="background-color:gold;border:1px solid lightBlue;height:50px;" ng-show="selectedTournament.R1Id > 0">
+        <td style="text-align:right;" width="130px">Winner:  </td>
+        <td>
+          {{selectedTournament.R1Name}}          
+        </td>
+      </tr>
+      <tr style="background-color:silver;border:1px solid lightBlue;height:40px;" ng-show="selectedTournament.R2Id > 0">
+        <td style="text-align:right;">Runner:  </td>
+        <td>
+          {{selectedTournament.R2Name}}
+        </td>
+      </tr>
+      <tr style="background-color:sandybrown;border:1px solid lightBlue;height:30px;" ng-show="selectedTournament.R3Id > 0">
+        <td style="text-align:right;">3rd Position:  </td>
+        <td>
+          {{selectedTournament.R3Name}}
+        </td>
+      </tr>
+      <tr style="background-color:beige;" ng-show="selectedTournament.R4Id > 0">
+        <td style="text-align:right;">4th Position:  </td>
+        <td>
+          {{selectedTournament.R4Name}}
+        </td>
+      </tr>
+      <tr style="background-color:beige;" ng-show="selectedTournament.R5Id > 0">
+        <td style="text-align:right;">5th Position:  </td>
+        <td>
+          {{selectedTournament.R5Name}}
+        </td>
+      </tr>
+      <tr style="background-color:beige;" ng-show="selectedTournament.R6Id > 0">
+        <td style="text-align:right;">6th Position:  </td>
+        <td>
+          {{selectedTournament.R6Name}}
+        </td>
+      </tr>
+      <tr style="background-color:beige;" ng-show="selectedTournament.R7Id > 0">
+        <td style="text-align:right;">7th Position:  </td>
+        <td>
+          {{selectedTournament.R7Name}}
+        </td>
+      </tr>
+    </table>
+  </div> 
+
+  <div><br /><br /></div>
+  
+  <div class="row col-xs-12" id="tournamentMatchesTbl" style="display:none;float:left;">
+    <h2>Matches</h2>
+    <table class="table table-striped" border="1" style="width:auto;">
+      <thead>
+        <tr>
+          <th>Sl #</th>
+          <th>Type</th>
+          <th>Player 1</th>
+          <th>Score</th>
+          <th>Player 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tMatch in tournamentMatches">
+          <td><a href="javascript:void(0)" ng-click="ShowMessage(tMatch.Details)" style="color:blue;text-decoration:underline;">{{tMatch.DId}}</a></td>
+          <td>{{tMatch.MType}}</td>
+          <td class="{{tMatch.s1}}">{{tMatch.n1}} <span ng-show="tMatch.T1.length > 0">({{tMatch.T1}})</span></td>
+          <td>{{tMatch.G1}} - {{tMatch.G2}}</td>
+          <td class="{{tMatch.s2}}">{{tMatch.n2}} <span ng-show="tMatch.T2.length > 0">({{tMatch.T2}})</span></td>
+        </tr>
+      </tbody>
+
+    </table>
+    
+    <div style="float:left;">
+      <button type="button" data-toggle="modal" data-target="#addResultModal" class="btn btn-warning pull-right">
+      Add Result</button>
+    </div>
+
+    <div style="float:right;">
+      <button type="button" ng-click="showAddMatchModal()" class="btn btn-warning pull-right">
+        Add Score
+      </button>
+      <br />
+    </div>
+  </div>
+  
+</div>

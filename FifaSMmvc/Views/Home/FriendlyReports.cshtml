@@ -1,0 +1,28 @@
+﻿<div class="container noPad" ng-controller="fReportController">
+  <br />
+
+  <table class="table table-striped" border="1" style="width:auto;">
+    <thead>
+      <tr>
+        <th>Sl #</th>
+        <th>Name</th>
+        <th>#</th>
+        <th>W-D-L</th>
+        <th>Shot-Faced</th>
+        <th>GPM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="rpt in reports">
+        <td>{{rpt.PlayerId}}</td>
+        <td>{{rpt.PlayerName}}</td>
+        <td>{{rpt.Played}}</td>
+        <td><span style="color:green">{{rpt.Won}}</span>-<span style="color:darkorange">{{rpt.Draw}}</span>-<span style="color:red">{{rpt.Lost}}</span></td>
+        @*<td><span style="background-color:lightgreen">{{rpt.Won}}</span>-<span style="background-color:khaki">{{rpt.Draw}}</span>-<span style="background-color:lightsalmon">{{rpt.Lost}}</span></td>*@
+        <td><span style="color:green">{{rpt.GoalShot}}</span>-<span style="color:red">{{rpt.GoalFaced}}</span></td>
+        <td>{{rpt.AvgGoalPerMatch}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

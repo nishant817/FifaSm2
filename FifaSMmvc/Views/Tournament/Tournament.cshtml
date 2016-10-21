@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Tournament";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+  <div class="row">
+    <ul class="w3-navbar w3-black">
+      <div class="col-xs-6">
+        <li style="width:100%;height:100%;"><a href="javascript:void(0)" class="tablink w3-red" onclick="openTab(event, 'tTabItem', 'Tournaments');">Tournaments</a></li>
+      </div>
+      <div class="col-xs-6">
+        <li style="width:100%;height:100%;"><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'tTabItem', 'TournamentReports');">Reports</a></li>
+      </div>
+    </ul>
+  </div>
+  
+  <div>
+    <div id="Tournaments" class="w3-container w3-border tTabItem" style="display:block">
+      <br />
+      @Html.Partial("~/Views/Tournament/TournamentMatches.cshtml")
+    </div>
+
+    <div id="TournamentReports" class="w3-container w3-border tTabItem">
+      <br />
+      @Html.Partial("~/Views/Tournament/TournamentReports.cshtml")
+    </div>
+  </div>
+</div>
+
+  
