@@ -14,8 +14,9 @@ namespace FifaSMmvc.Models
     
     public partial class FmScore
     {
+        public bool IsUpdate { get; set; }
         public int Id { get; set; }
-        public Nullable<System.DateTime> MatchDt { get; set; }
+        public DateTime? MatchDt { get; set; }
         public int Player1 { get; set; }
         public int Team1 { get; set; }
         public int Goals1 { get; set; }

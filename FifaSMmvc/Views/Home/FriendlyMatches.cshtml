@@ -9,9 +9,10 @@
           <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
           </button>
-          <h2 class="modal-title" id="addScoreModalLabel"> Add Score </h2>
+          <h2 class="modal-title" id="addScoreModalLabel" ng-hide="newFrScore.IsUpdate"> Add Score </h2>
+          <h2 class="modal-title" id="addScoreModalLabel" ng-show="newFrScore.IsUpdate"> Update Score for #{{newFrScore.Id}} </h2>
         </div>
-        <div class="modal-body" ng-init="newFrScore = []">
+        <div class="modal-body">
           <div class="container noPad">
             <table class="col-xs-12 col-md-4" style="margin:0;">
               <!--border=1 frame=void rules=rows>-->
@@ -52,11 +53,10 @@
         </div>
 
         <div class="modal-footer">
-          <button ng-click="AddNewScores()" type="submit" class="btn btn-info btn-sm" style="font-size: 11px;">Submit</button>
+          <button ng-click="addOrUpdateFriendlyScore()" type="submit" class="btn btn-info btn-sm" style="font-size: 11px;">Submit</button>
           <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="font-size: 11px;">Cancel</button>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -67,7 +67,7 @@
   <div class="container" ng-show="dataLoading">
     <div class="row">
       <div class="col-xs-12">
-        <img src="~/Contents/Wait5.gif" style="max-width:100%" />
+        <img src="~/Contents/Wait3.gif" style="max-width:100%" />
       </div>
     </div>
   </div>  
@@ -101,8 +101,8 @@
       </thead>
       <tbody>
         <tr ng-repeat="score in fScores">
-          <td>{{score.Id}}</td>
-          @*<td><a href=""  data-toggle="modal" ng-click="newFrScore = score" data-target="#addScoreModal" >{{score.Id}}</a></td>*@
+          @*<td>{{score.Id}}</td>*@
+          <td><a data-toggle="modal" ng-click="setEditDialog(score, score.Id)" data-target="#addScoreModal" href="javascript:void(0)" style="color:#069;text-decoration:underline;" >{{score.Id}}</a></td>
           <td>{{score.mdt | date: 'yyyy-MM-dd'}}</td>
           <td class="{{score.s1}}">{{score.n1}} <span ng-show="score.Team1 > 0">({{teamList[score.Team1-1].TName}})</span></td>
           <td>{{score.Goals1}} - {{score.Goals2}}</td>

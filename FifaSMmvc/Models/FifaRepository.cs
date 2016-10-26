@@ -80,7 +80,7 @@ namespace FifaSMmvc.Models
             throw new NotImplementedException();
         }
 
-        public static int AddFriendlyMatchScores(FmScore newScore)
+        public static int AddFriendlyMatchScore(FmScore newScore)
         {
             //if (scores == null || scores.Length == 0) { return -1; }
             if (newScore == null) return -1;
@@ -112,6 +112,32 @@ namespace FifaSMmvc.Models
 
             string sql = sqlSb.ToString();
 
+            int result = -1;
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+
+            return result;
+        }
+
+        public static int UpdateFriendlyMatchScore(FmScore score)
+        {
+            if (score == null) return -1;
+
+            if (!score.MatchDt.HasValue)
+                score.MatchDt = DateTime.Now;
+
+            var sql = string.Format("Update FmScores set MatchDt = '{0}', Player1 = {1}, Team1 = {2}, Goals1 = {3}, Player2 = {4}, Team2 = {5}, Goals2 = {6} where Id = {7}",
+                                    score.MatchDt,
+                                    score.Player1, score.Team1, score.Goals1,
+                                    score.Player2, score.Team2, score.Goals2,
+                                    score.Id);
+                        
             int result = -1;
             using (SqlConnection conn = new SqlConnection(connStr))
             {

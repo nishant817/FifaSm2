@@ -33,8 +33,8 @@
                 });
   };
 
-  this.addScores = function (scoresToAdd) {
-    return $http.post('/Home/AddFriendlyScores', scoresToAdd)
+  this.addOrUpdateFriendlyScore = function (scoreToAdd) {
+    return $http.post('/Home/AddOrUpdateFriendlyScore', scoreToAdd)
                 .then(function (result) {
                   return result.data;
                 });

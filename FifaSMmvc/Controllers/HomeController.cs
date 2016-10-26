@@ -58,11 +58,20 @@ namespace FifaSMmvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddFriendlyScores(FmScore newScore)
+        public JsonResult AddOrUpdateFriendlyScore(FmScore newScore)
         {
-            var scoresAdded = FifaRepository.AddFriendlyMatchScores(newScore);
-            var jfScores = Json(scoresAdded, JsonRequestBehavior.AllowGet);
-            return GetFriendlyScores();
+            if (newScore.IsUpdate && newScore.Id > 0)
+            {
+                var scoresAdded = FifaRepository.UpdateFriendlyMatchScore(newScore);
+                var jfScores = Json(scoresAdded, JsonRequestBehavior.AllowGet);
+                return GetFriendlyScores();
+            }
+            else
+            {
+                var scoresAdded = FifaRepository.AddFriendlyMatchScore(newScore);
+                var jfScores = Json(scoresAdded, JsonRequestBehavior.AllowGet);
+                return GetFriendlyScores();
+            }
         }
 
         public JsonResult GetFriendlyMatchesReports()

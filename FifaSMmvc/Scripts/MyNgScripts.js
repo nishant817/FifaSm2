@@ -82,18 +82,22 @@ ngApp.controller('fsmController', ['$scope', '$rootScope', '$http', '$filter', '
     }
   };
   
-  $scope.AddNewScores = function () {
+  $scope.addOrUpdateFriendlyScore = function () {
     console.log($scope.newFrScore);
-    if (!validateAddDialog()) {
+    if ($scope.newFrScore.Player1 == $scope.newFrScore.Player2) {
+      alert('Sorry sir, This site is NOT for KICK-OFF matches');
+      return;
+    }
+    if ($scope.newFrScore.Player1 == $scope.newFrScore.Player2 || !$scope.newFrScore.Player1 || !$scope.newFrScore.Player2 || !$scope.newFrScore.Team1 || !$scope.newFrScore.Team2) {
       alert('Oops... I think you missed something... :-)');
       return;
     }
 
     $('#addScoreModal').modal('hide');
-    var strData = JSON.stringify($scope.newFrScore);
-    console.log('stringify newFrScore: ' + strData);
+    //var strData = JSON.stringify($scope.newFrScore);
+    //console.log('stringify newFrScore: ' + strData);
 
-    friendlyMatchesService.addScores($scope.newFrScore)
+    friendlyMatchesService.addOrUpdateFriendlyScore($scope.newFrScore)
       .then(function (result) {
         allScores = result;
         console.log('Added FriendlyScores ' + result.length);
@@ -102,11 +106,18 @@ ngApp.controller('fsmController', ['$scope', '$rootScope', '$http', '$filter', '
       });    
   };
 
-  var validateAddDialog = function () {
-    if (!$scope.newFrScore.Player1 || !$scope.newFrScore.Player2 || !$scope.newFrScore.Team1 || !$scope.newFrScore.Team2) {
-      return false;
-    }
-    return true;
+  $scope.setEditDialog = function (score, scoreId) {
+    //console.log('id: ' + scoreId);
+    //console.log('Date: ' + new Date(parseInt(score.MatchDt.substr(6))));
+    $scope.newFrScore.IsUpdate = true;
+    $scope.newFrScore.Id = score.Id;
+    $scope.newFrScore.MatchDt = new Date(parseInt(score.MatchDt.substr(6)));
+    $scope.newFrScore.Player1 = score.Player1;
+    $scope.newFrScore.Goals1 = score.Goals1;
+    $scope.newFrScore.Team1 = score.Team1;
+    $scope.newFrScore.Player2 = score.Player2;
+    $scope.newFrScore.Goals2 = score.Goals2;
+    $scope.newFrScore.Team2 = score.Team2;
   };
 
 }]);
