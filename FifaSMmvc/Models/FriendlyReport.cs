@@ -18,7 +18,7 @@ namespace FifaSMmvc.Models
         public decimal LostPc { get; set; }
         public int GoalShot { get; set; }
         public int GoalFaced { get; set; }
-        public decimal AvgGoalPerMatch { get; set; }
+        public decimal PointsPerMatch { get; set; }
         //public float Score { get; set; }
     }
 }

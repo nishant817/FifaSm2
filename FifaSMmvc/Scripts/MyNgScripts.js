@@ -3,18 +3,16 @@
 var ngApp = angular.module('fsmApp', ['AxelSoft']);
 
 
-ngApp.controller('fsmController', ['$scope', '$http', '$filter', '$q', 'playerService', 'friendlyMatchesService', function ($scope, $http, $filter, $q, playerService, friendlyMatchesService) {
+ngApp.controller('fsmController', ['$scope', '$rootScope', '$http', '$filter', '$q', 'playerService', 'friendlyMatchesService', function ($scope, $rootScope, $http, $filter, $q, playerService, friendlyMatchesService) {
+  $scope.dataLoading = true;
   $scope.filteredScores = [];
   $scope.players = [];
   $scope.playersWithAll = [];
   $scope.fScores = [];
   var allScores = [];
   $scope.today = $filter('date')(new Date(), 'yyyy-MM-dd');
-  $scope.fMatchDetail = {};
+  $scope.newFrScore = {};
   $scope.teamList = teamList;
-
-  //$scope.state = 'AL';
-  //$scope.states = states;
   
 
   var init = function () {
@@ -35,6 +33,7 @@ ngApp.controller('fsmController', ['$scope', '$http', '$filter', '$q', 'playerSe
 
     $q.all([playersPromise, friendlyMatchesPromise]).then(function () {
       formatFriendlyScores();
+      $scope.dataLoading = false;
     });
   }; //End init()
 
@@ -84,82 +83,88 @@ ngApp.controller('fsmController', ['$scope', '$http', '$filter', '$q', 'playerSe
   };
   
   $scope.AddNewScores = function () {
-    console.log($scope.fMatchDetail);
-    $('#addScoreModal').modal('hide');
-    var strData = JSON.stringify($scope.fMatchDetail);
-    console.log('stringify fMatchDetail: ' + strData);
+    console.log($scope.newFrScore);
+    if (!validateAddDialog()) {
+      alert('Oops... I think you missed something... :-)');
+      return;
+    }
 
-    friendlyMatchesService.addScores($scope.fMatchDetail)
+    $('#addScoreModal').modal('hide');
+    var strData = JSON.stringify($scope.newFrScore);
+    console.log('stringify newFrScore: ' + strData);
+
+    friendlyMatchesService.addScores($scope.newFrScore)
       .then(function (result) {
         allScores = result;
         console.log('Added FriendlyScores ' + result.length);
         formatFriendlyScores();
-      });
-    
-  };  
+        $rootScope.$broadcast('friendlyMatchesUpdated');
+      });    
+  };
+
+  var validateAddDialog = function () {
+    if (!$scope.newFrScore.Player1 || !$scope.newFrScore.Player2 || !$scope.newFrScore.Team1 || !$scope.newFrScore.Team2) {
+      return false;
+    }
+    return true;
+  };
 
 }]);
 
 
-ngApp.controller('fReportController', ['$scope','$http', '$filter', function ($scope, $http, $filter) {
+ngApp.controller('fReportController', ['$scope', '$http', '$filter', 'friendlyMatchesService', function ($scope, $http, $filter, friendlyMatchesService) {
+  var frReports = [];
 
   var init = function () {
     console.log('inside rptCtrl init');
-    $http.get('/Home/GetFriendlyMatchesReports')
-    .success(function (data) {
-      console.log(data);
-      $scope.reports = data;
-    })
-    .error(function (errMsg) {
-      console.log(errMsg);
+    friendlyMatchesService.getFriendlyMatchesReports()
+    .then(function (result) {
+      //$scope.reports = result;
+      frReports = result;
+      formatFriendlyReports();
+      //$scope.reports = frReports;
     });
   };
 
   init();
 
+  $scope.$on('friendlyMatchesUpdated', function () {
+    friendlyMatchesService.getFriendlyMatchesReports()
+    .then(function (result) {
+      //$scope.reports = result;
+      frReports = result;
+      formatFriendlyReports();
+      //$scope.reports = frReports;
+    });
+  });
 
-  //reports = [players.length];
-    
-  ////var getReport = function() {
-  //  for(var i=0; i< players.length; i++) {
-  //    reports[i] = {};
-  //    reports[i].pid = players[i].id;
-  //    reports[i].name = players[i].name;
-  //    reports[i].played = 0
-  //    reports[i].wins = 0;
-  //    reports[i].lost = 0;
-  //    reports[i].draws = 0;
-  //    reports[i].gScored = 0;
-  //    reports[i].gFaced = 0;
-  //  }
-    
-  //  for(var i=0; i< fScores.length; i++) {
-  //    var fsc = fScores[i];
-      
-  //    reports[fsc.p1].played++;
-  //    reports[fsc.p2].played++;
-  //    reports[fsc.p1].gScored += parseInt(fsc.g1);
-  //    reports[fsc.p1].gFaced += parseInt(fsc.g2);
-  //    reports[fsc.p2].gScored += parseInt(fsc.g2);
-  //    reports[fsc.p2].gFaced += parseInt(fsc.g1);
+  var formatFriendlyReports = function () {
+    console.log(frReports.length);
+    for (var i = 0; i < frReports.length; i++) {
+      if (frReports[i].Won > frReports[i].Lost) {
+        frReports[i].wc = 'w';
+      }
+      else if (frReports[i].Won < frReports[i].Lost) {
+        frReports[i].wc = 'l';
+      }
+      else
+        frReports[i].wc = 'd';
 
-  //    if(fsc.g1 > fsc.g2) {
-  //      reports[fsc.p1].wins++;
-  //      reports[fsc.p2].lost++;
-  //    }
-  //    else if(fsc.g1 < fsc.g2){
-  //      reports[fsc.p1].lost++;
-  //      reports[fsc.p2].wins++;
-  //    }
-  //    else {
-  //      reports[fsc.p1].draws++;
-  //      reports[fsc.p2].draws++;
-  //    }
-  //  }
-  
-  //  $scope.reports = reports;
-  
-  //}
+      if (frReports[i].GoalShot > frReports[i].GoalFaced) {
+        frReports[i].gc = 'w';
+      }
+      else if (frReports[i].GoalShot < frReports[i].GoalFaced) {
+        frReports[i].gc = 'l';
+      }
+      else
+        frReports[i].gc = 'd';
+
+      console.log(frReports[i].PlayerName + "  " + frReports[i].wc + "  " + frReports[i].gc);
+    }
+
+    $scope.reports = frReports;
+  };
+
 }]);
 
 

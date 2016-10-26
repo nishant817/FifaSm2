@@ -5,14 +5,14 @@
 
   this.getPlayers = function () {
     if (players.length > 0) {
-      console.log('yay! we already have players' + players.length);
+      //console.log('yay! we already have players' + players.length);
       var deferred = $q.defer();
       var tempPlayers = angular.copy(players);
       deferred.resolve(tempPlayers);
       return deferred.promise;
     }
     else {
-      console.log('Dont have players. fetching it again');
+      //console.log('Dont have players. fetching it again');
       return $http.get('/Home/GetPlayers')
                   .then(function (result) {
                     players = result.data;
@@ -25,7 +25,7 @@
 //================================================================================
 
 .service('friendlyMatchesService', ['$http', function ($http) {
-
+  
   this.getScores = function () {
     return $http.get('/Home/GetFriendlyScores')
                 .then(function (result) {
@@ -35,6 +35,13 @@
 
   this.addScores = function (scoresToAdd) {
     return $http.post('/Home/AddFriendlyScores', scoresToAdd)
+                .then(function (result) {
+                  return result.data;
+                });
+  };
+
+  this.getFriendlyMatchesReports = function () {
+    return $http.get('/Home/GetFriendlyMatchesReports')
                 .then(function (result) {
                   return result.data;
                 });

@@ -140,14 +140,14 @@ namespace FifaSMmvc.Controllers
                         reportsDict[pl.Id].WinPc = 0;
                         reportsDict[pl.Id].LostPc = 0;
                         reportsDict[pl.Id].DrawPc = 0;
-                        reportsDict[pl.Id].AvgGoalPerMatch = 0;
+                        reportsDict[pl.Id].PointsPerMatch = 0;
                         continue;
                     }
                     reportsDict[pl.Id].WinPc = Math.Round((decimal)(reportsDict[pl.Id].Won * 100 / reportsDict[pl.Id].Played), 2);
                     reportsDict[pl.Id].LostPc = Math.Round((decimal)(reportsDict[pl.Id].Lost * 100 / reportsDict[pl.Id].Played), 2);
                     reportsDict[pl.Id].DrawPc = Math.Round((decimal)(reportsDict[pl.Id].Draw * 100 / reportsDict[pl.Id].Played), 2);
 
-                    reportsDict[pl.Id].AvgGoalPerMatch = Math.Round((decimal)(reportsDict[pl.Id].GoalShot / reportsDict[pl.Id].Played), 2);
+                    reportsDict[pl.Id].PointsPerMatch = Math.Round(((decimal)(3*reportsDict[pl.Id].Won + reportsDict[pl.Id].Draw)/ reportsDict[pl.Id].Played), 2);
                 }
             }
 

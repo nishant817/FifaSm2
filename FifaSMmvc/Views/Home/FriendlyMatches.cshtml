@@ -11,7 +11,7 @@
           </button>
           <h2 class="modal-title" id="addScoreModalLabel"> Add Score </h2>
         </div>
-        <div class="modal-body" ng-init="fMatchDetail = []">
+        <div class="modal-body" ng-init="newFrScore = []">
           <div class="container noPad">
             <table class="col-xs-12 col-md-4" style="margin:0;">
               <!--border=1 frame=void rules=rows>-->
@@ -20,29 +20,29 @@
                   <table>
                     <tr>
                       <td colspan="4" style="text-align:right;">
-                        <input ng-model="fMatchDetail.MatchDt" type="date" ng-init="fMatchDetail.MatchDt = today" value="{{fMatchDetail.MatchDt}}" />
+                        <input ng-model="newFrScore.MatchDt" type="date" ng-init="newFrScore.MatchDt = today" value="{{newFrScore.MatchDt}}" />
                       </td>
                     </tr>
                     
                     <tr>
                       <td>Player 1 <span style="color:red"> *</span>: </td>
-                      <td> <select ng-model="fMatchDetail.Player1" ng-options="p.Id as p.Name for p in players" class="players"></select> </td>
+                      <td> <select ng-model="newFrScore.Player1" ng-options="p.Id as p.Name for p in players" class="players"></select> </td>
                       <td>Goals<span style="color:red"> *</span>: </td>
-                      <td> <input ng-model="fMatchDetail.Goals1" class="goal" type="number" placeholder="0" required /> </td>
+                      <td> <input ng-model="newFrScore.Goals1" class="goal" type="number" placeholder="0" required /> </td>
                     </tr>
                     <tr>
                       <td>Team:  </td>
-                      <td colspan="3"><div custom-select="t.TId as t.FName for t in teamList | filter: { TName: $searchTerm } track by t.TId" ng-model="fMatchDetail.Team1"></div></td>
+                      <td colspan="3"><div custom-select="t.TId as t.FName for t in teamList | filter: { TName: $searchTerm } track by t.TId" ng-model="newFrScore.Team1"></div></td>
                     </tr>
                     <tr>
                       <td>Player 2 <span style="color:red"> *</span>: </td>
-                      <td> <select ng-model="fMatchDetail.Player2" ng-options="p.Id as p.Name for p in players" class="players"></select> </td>
+                      <td> <select ng-model="newFrScore.Player2" ng-options="p.Id as p.Name for p in players" class="players"></select> </td>
                       <td>Goals<span style="color:red"> *</span>:  </td>
-                      <td> <input ng-model="fMatchDetail.Goals2" class="goal" type="number" placeholder="0" required /> </td>
+                      <td> <input ng-model="newFrScore.Goals2" class="goal" type="number" placeholder="0" required /> </td>
                     </tr>
                     <tr>
                       <td>Team:  </td>
-                      <td colspan="3"><div custom-select="t.TId as t.FName for t in teamList | filter: { TName: $searchTerm } track by t.TId" ng-model="fMatchDetail.Team2"></div></td>
+                      <td colspan="3"><div custom-select="t.TId as t.FName for t in teamList | filter: { TName: $searchTerm } track by t.TId" ng-model="newFrScore.Team2"></div></td>
                     </tr>
                   </table>
                 </td>
@@ -63,13 +63,21 @@
   @*<div custom-select="s as s.name for s in states | filter: { name: $searchTerm } track by s.id" ng-model="state"></div>*@
   @*<div custom-select="t as t.TName for t in teamList | filter: { TName: $searchTerm } track by t.TId" ng-model="selectedTeam"></div>
   <div>{{selectedTeam.TId}} - {{selectedTeam.TName}}</div>*@
+
+  <div class="container" ng-show="dataLoading">
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="~/Contents/Wait5.gif" style="max-width:100%" />
+      </div>
+    </div>
+  </div>  
   
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-md-5">
         <strong>Filter: </strong><select ng-options="p as p.Name for p in playersWithAll" ng-model="filterByPlayer" ng-change="setPlayerFilter()"></select>
 
-        <button type="button" data-toggle="modal" ng-click="fMatchDetail = {}" data-target="#addScoreModal"
+        <button type="button" data-toggle="modal" ng-click="newFrScore = {}" data-target="#addScoreModal"
                 class="btn btn-warning pull-right">
           Add Score
         </button>
@@ -94,7 +102,7 @@
       <tbody>
         <tr ng-repeat="score in fScores">
           <td>{{score.Id}}</td>
-          @*<td><a href=""  data-toggle="modal" ng-click="fMatchDetail = score" data-target="#addScoreModal" >{{score.Id}}</a></td>*@
+          @*<td><a href=""  data-toggle="modal" ng-click="newFrScore = score" data-target="#addScoreModal" >{{score.Id}}</a></td>*@
           <td>{{score.mdt | date: 'yyyy-MM-dd'}}</td>
           <td class="{{score.s1}}">{{score.n1}} <span ng-show="score.Team1 > 0">({{teamList[score.Team1-1].TName}})</span></td>
           <td>{{score.Goals1}} - {{score.Goals2}}</td>

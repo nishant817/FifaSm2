@@ -93,6 +93,12 @@
     <Content Include="App_Data\FsmDB001_log.ldf">
       <DependentUpon>FsmDB001.mdf</DependentUpon>
     </Content>
+    <Content Include="Contents\Wait1.gif" />
+    <Content Include="Contents\Wait2.gif" />
+    <Content Include="Contents\Wait3.GIF" />
+    <Content Include="Contents\Wait4.GIF" />
+    <Content Include="Contents\Wait5.gif" />
+    <Content Include="Contents\Wait6.gif" />
     <Content Include="Global.asax" />
     <Content Include="Models\FsmDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -177,7 +183,6 @@
     <Content Include="Scripts\data.js" />
     <Content Include="Views\Home\FriendlyMatches.cshtml" />
     <Content Include="Views\Tournament\TournamentReports.cshtml" />
-    <None Include="Scripts\fifasm.cache" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -185,9 +190,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contents\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
@@ -195,9 +198,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Scripts\fifasm.cache</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />

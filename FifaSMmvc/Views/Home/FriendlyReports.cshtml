@@ -4,23 +4,24 @@
   <table class="table table-striped" border="1" style="width:auto;">
     <thead>
       <tr>
-        <th>Sl #</th>
+        @*<th>Sl #</th>*@
         <th>Name</th>
         <th>#</th>
         <th>W-D-L</th>
-        <th>Shot-Faced</th>
-        <th>GPM</th>
+        <th>GF-GA</th>
+        <th>PPM</th>
+        <th>Win %</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="rpt in reports">
-        <td>{{rpt.PlayerId}}</td>
+        @*<td>{{rpt.PlayerId}}</td>*@
         <td>{{rpt.PlayerName}}</td>
         <td>{{rpt.Played}}</td>
-        <td><span style="color:green">{{rpt.Won}}</span>-<span style="color:darkorange">{{rpt.Draw}}</span>-<span style="color:red">{{rpt.Lost}}</span></td>
-        @*<td><span style="background-color:lightgreen">{{rpt.Won}}</span>-<span style="background-color:khaki">{{rpt.Draw}}</span>-<span style="background-color:lightsalmon">{{rpt.Lost}}</span></td>*@
-        <td><span style="color:green">{{rpt.GoalShot}}</span>-<span style="color:red">{{rpt.GoalFaced}}</span></td>
-        <td>{{rpt.AvgGoalPerMatch}}</td>
+        <td class="{{rpt.wc}}">{{rpt.Won}}-{{rpt.Draw}}-{{rpt.Lost}}</td>
+        <td class="{{rpt.gc}}">{{rpt.GoalShot}}-{{rpt.GoalFaced}}</td>
+        <td>{{rpt.PointsPerMatch}}</td>
+        <td>{{rpt.WinPc}}</td>
       </tr>
     </tbody>
 

@@ -9,7 +9,7 @@
           </button>
           <h2 class="modal-title" id="addScoreModalLabel"> Add Score </h2>
         </div>
-        <div class="modal-body" ng-init="fMatchDetail = []">
+        <div class="modal-body" ng-init="newFrScore = []">
           <div class="container noPad">
             <table class="col-xs-12 col-md-4">
               <tr ng-repeat="i in [0,1]" style="border:2px solid Highlight;">
@@ -20,34 +20,34 @@
                         <larger>Score {{i+1}}</larger>
                       </td>
                       <td colspan="2" style="text-align:right;">
-                        <input ng-model="fMatchDetail[i].MatchDt" type="date" ng-init="fMatchDetail[i].MatchDt = today" value="{{fMatchDetail[i].MatchDt}}" />
+                        <input ng-model="newFrScore[i].MatchDt" type="date" ng-init="newFrScore[i].MatchDt = today" value="{{newFrScore[i].MatchDt}}" />
                       </td>
                     </tr>
                     <tr>
                       <td>Players <span style="color:red"> *</span>: </td>
                       <td>
-                        <select ng-model="fMatchDetail[i].Player1" ng-options="p.Id as p.Name for p in players" class="players"></select>
+                        <select ng-model="newFrScore[i].Player1" ng-options="p.Id as p.Name for p in players" class="players"></select>
                       </td>
                       <td>
-                        <select ng-model="fMatchDetail[i].Player2" ng-options="p.Id as p.Name for p in players" class="players"></select>
+                        <select ng-model="newFrScore[i].Player2" ng-options="p.Id as p.Name for p in players" class="players"></select>
                       </td>
                     </tr>
                     <tr>
                       <td>Team:  </td>
                       <td>
-                        <input type="text" class="teamName" ng-model="fMatchDetail[i].Team1" maxlength="18" placeholder="Team Name" />
+                        <input type="text" class="teamName" ng-model="newFrScore[i].Team1" maxlength="18" placeholder="Team Name" />
                       </td>
                       <td>
-                        <input type="text" class="teamName" ng-model="fMatchDetail[i].Team2" maxlength="18" placeholder="Team Name" />
+                        <input type="text" class="teamName" ng-model="newFrScore[i].Team2" maxlength="18" placeholder="Team Name" />
                       </td>
                     </tr>
                     <tr>
                       <td>Goals<span style="color:red"> *</span>:  </td>
                       <td>
-                        <input ng-model="fMatchDetail[i].Goals1" class="goal" type="number" placeholder="0" required />
+                        <input ng-model="newFrScore[i].Goals1" class="goal" type="number" placeholder="0" required />
                       </td>
                       <td>
-                        <input ng-model="fMatchDetail[i].Goals2" class="goal" type="number" placeholder="0" required />
+                        <input ng-model="newFrScore[i].Goals2" class="goal" type="number" placeholder="0" required />
                       </td>
                     </tr>
                   </table>
@@ -71,7 +71,7 @@
       <div class="col-xs-12 col-sm-8 col-md-5">
         <strong>Filter: </strong><select ng-options="p as p.Name for p in playersWithAll" ng-model="filterByPlayer" ng-change="setPlayerFilter()"></select>
 
-        <button type="button" data-toggle="modal" ng-click="fMatchDetail = []" data-target="#addScoreModal"
+        <button type="button" data-toggle="modal" ng-click="newFrScore = []" data-target="#addScoreModal"
                 class="btn btn-warning pull-right">Add Score</button>
       </div>
     </div>
